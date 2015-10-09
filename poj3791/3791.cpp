@@ -3,9 +3,14 @@
 
 using namespace std;
 
+/*
+将所有可能的演化方式模拟进行
+筛掉无法完成分配的方式
+最后从末尾逆向寻路到开头并输出
+*/
+
+
 void solve(int ctKeys, double* letterFreq) {
-	//将所有可能的演化方式模拟进行
-	//筛掉无法完成分配的方式
 	double avrStrike[26][26];//[m][n]，到第n个字母时使用了m个键。此时的平均击键数
 	int ctLetter[26][26];//此时第m个键上的字母数
 	double thisStrike = 0.0;//当前演化方式下的平均击键数
@@ -71,7 +76,7 @@ void solve(int ctKeys, double* letterFreq) {
 
 
 int main() {
-	//test case
+	//test
 	double letterFreq[26];//= { 8.167,1.492,2.782,4.253,12.702,2.228,2.015,6.094,6.966,0.153,0.772,4.025,2.406,6.749,7.507,1.929,0.095,5.987,6.327,9.056,2.758,0.978,2.360,0.150,1.974,0.075 };
 	//int ctKeys = 8;
 	int dataCount = 0, ctKeys = 0;
@@ -82,7 +87,7 @@ int main() {
 			cin >> letterFreq[j];
 		}
 		cout << i + 1 << ' ';
-		//将输入的百分比转化为比例
+		//将输入的百分比转化为小数比例
 		for (int i = 0; i < 26; i++) letterFreq[i] /= 100.0;
 		solve(ctKeys, letterFreq);
 	}
