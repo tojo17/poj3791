@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void solve(int ctKeys, double letterFreq[26]) {
+void solve(int ctKeys, double* letterFreq) {
 	//将所有可能的演化方式模拟进行
 	//筛掉无法完成分配的方式
 	double avrStrike[26][26];//[m][n]，到第n个字母时使用了m个键。此时的平均击键数
@@ -29,9 +29,7 @@ void solve(int ctKeys, double letterFreq[26]) {
 			if (maxLetters > 8) maxLetters = 8;
 			if (j + maxLetters > 26) maxLetters = 26 - j;//防止数组越界
 			thisStrike = avrStrike[i - 1][j - 1];//读取之前路径的总击键数便于比较
-			if (thisStrike > 8999.0) {
-				break;
-			}//筛掉不存在的组合
+			if (thisStrike > 8999.0) break;//筛掉不存在的组合
 			for (int k = 0; k < maxLetters; k++) {//尝试在当前键上放置不同数量的字母，比较击键数
 				/*if (letterFreq[j + k] < 0) {
 					cout << "ERR" << endl;
@@ -66,16 +64,27 @@ void solve(int ctKeys, double letterFreq[26]) {
 
 
 
-double letterFreq[26] = { 8.167,1.492,2.782,4.253,12.702,2.228,2.015,6.094,6.966,0.153,0.772,4.025,2.406,6.749,7.507,1.929,0.095,5.987,6.327,9.056,2.758,0.978,2.360,0.150,1.974,0.075 };
+//double letterFreq[26];
+//= { 8.167,1.492,2.782,4.253,12.702,2.228,2.015,6.094,6.966,0.153,0.772,4.025,2.406,6.749,7.507,1.929,0.095,5.987,6.327,9.056,2.758,0.978,2.360,0.150,1.974,0.075 };
 
 
 
 
 int main() {
-	//将输入的百分比转化为比例
-	int ctKeys = 8;
-	//double letterFreq[26] = { 8.167,1.492,2.782,4.253,12.702,2.228,2.015,6.094,6.966,0.153,0.772,4.025,2.406,6.749,7.507,1.929,0.095,5.987,6.327,9.056,2.758,0.978,2.360,0.150,1.974,0.075 };
-	for (int i = 0; i < 26; i++) letterFreq[i] /= 100.0;
-	solve(ctKeys, letterFreq);
+	//test case
+	double letterFreq[26];//= { 8.167,1.492,2.782,4.253,12.702,2.228,2.015,6.094,6.966,0.153,0.772,4.025,2.406,6.749,7.507,1.929,0.095,5.987,6.327,9.056,2.758,0.978,2.360,0.150,1.974,0.075 };
+	//int ctKeys = 8;
+	int dataCount = 0, ctKeys = 0;
+	cin >> dataCount;
+	for (int i = 0; i < dataCount; i++) {
+		cin >> ctKeys;
+		for (int j = 0; j < 26; j++) {
+			cin >> letterFreq[j];
+		}
+		cout << i + 1 << ' ';
+		//将输入的百分比转化为比例
+		for (int i = 0; i < 26; i++) letterFreq[i] /= 100.0;
+		solve(ctKeys, letterFreq);
+	}
 	return 0;
 }
